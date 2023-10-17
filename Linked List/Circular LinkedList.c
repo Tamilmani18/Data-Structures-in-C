@@ -51,6 +51,41 @@ void insertAtEnd(int val){
     printf("\n");
 }
 
+void insertAtPos(int pos, int val) {
+    if (last == NULL || pos <= 0) {
+        printf("Invalid position or list is empty.\n");
+        return;
+    }
+
+    node* newNode = (node*)malloc(sizeof(node));
+    newNode->data = val;
+
+    if (pos == 1) {
+        newNode->next = last->next;
+        last->next = newNode;
+    }
+    else {
+        node* current = last->next;
+        int i = 1;
+        while (i < pos - 1 && current != last) {
+            current = current->next;
+            i++;
+        }
+
+        if (i != pos - 1) {
+            printf("Invalid position.\n");
+            free(newNode);
+        }
+        else {
+            newNode->next = current->next;
+            current->next = newNode;
+            if (current == last) {
+                last = newNode;
+            }
+        }
+    }
+}
+
 void deleteAtBeginning(){
     if(last==NULL){
         printf("List is empty");
@@ -150,7 +185,7 @@ int main(){
                 scanf("%d", &pos);
                 printf("Enter the Value: ");
                 scanf("%d", &val);
-                //insertAtPos(pos, val);
+                insertAtPos(pos, val);
                 break;
             case 5:
                 deleteAtBeginning();
